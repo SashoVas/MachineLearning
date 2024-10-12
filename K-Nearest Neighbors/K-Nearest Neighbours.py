@@ -1,5 +1,8 @@
 import numpy as np
 from scipy import stats
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+import pandas as pd
 
 
 class KNaerestNeighbours:
@@ -30,11 +33,38 @@ class KNaerestNeighbours:
         return np.sum(correct_predictions)/len(correct_predictions)
 
 
-if __name__ == 'main':
-    knn = KNaerestNeighbours(2)
-    train_x = np.array([[14, 2], [2, 4], [43, 1], [34, 12],
-                        [5, 3], [26, 0], [74, 56], [0, 0]])
-    train_y = np.array([1, 1, 1, 1, 0, 0, 0, 0])
-    knn.fit(train_x, train_y)
+def test():
+    df = pd.read_csv('telecom_churn_clean.csv', index_col=0)
+    y = np.array(df['churn'])
+    X = np.array(df.drop(columns=['churn']))
 
-    print(knn.score(train_x, train_y))
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y)
+
+    knn = KNeighborsClassifier(n_neighbors=5)
+    knn.fit(X_train, y_train)
+    print('Accuracy sklearn with "n_neighbors=5":', knn.score(X_test, y_test))
+
+    knn2 = KNaerestNeighbours(k=5)
+    knn2.fit(X_train, y_train)
+    print('Accuracy custom implementation with "n_neighbors=5":',
+          knn2.score(X_test, y_test))
+
+    neighbors = np.arange(1, 13)
+
+    for n_neighbors in neighbors:
+
+        knn = KNeighborsClassifier(n_neighbors=n_neighbors)
+        knn.fit(X_train, y_train)
+        knn2 = KNeighborsClassifier(n_neighbors=n_neighbors)
+        knn2.fit(X_train, y_train)
+
+        if knn.score(X_test, y_test) != knn2.score(X_test, y_test):
+            print('Different result')
+            return
+
+    print("They are equivelent for every k value in the range [1,12]")
+
+
+if __name__ == '__main__':
+    test()
