@@ -20,7 +20,7 @@ def main():
 
     train_acc = {}
     test_acc = {}
-    neighbors = np.arange(1, 13)
+    neighbors = np.arange(1, 76)
 
     for n_neighbors in neighbors:
         knn = KNeighborsClassifier(n_neighbors=n_neighbors)
@@ -32,11 +32,14 @@ def main():
     print(f'train_accuracies={train_acc}')
     print(f'test_accuracies={test_acc}')
 
+    max_point = max(test_acc.items(), key=lambda x: x[1])
+    print(max_point)
     plt.suptitle('KNN: Varying Number of Neighbors')
     plt.xlabel('Number of Neighbours')
     plt.ylabel('Accuracy')
     plt.plot(train_acc.keys(), train_acc.values(), label='Training accuracy')
     plt.plot(test_acc.keys(), test_acc.values(), label='Testing accuracy')
+    plt.scatter(max_point[0], max_point[1], linewidths=0)
     plt.legend()
     plt.show()
 
