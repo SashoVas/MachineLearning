@@ -3,3 +3,4 @@
 ## Topics
     - Numpy, Pandas, Matplotlib & Seaborn
     - K-Nearest Neighbours and Introduction to ML
+    - Linear Regression
