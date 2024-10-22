@@ -4,3 +4,4 @@
     - Numpy, Pandas, Matplotlib & Seaborn
     - K-Nearest Neighbours and Introduction to ML
     - Linear Regression
+    - Cross Validation, Regularized Regression, Classification Metrics
