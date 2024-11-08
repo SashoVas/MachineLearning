@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.linear_model import Ridge
-from sklearn.model_selection import KFold, train_test_split, cross_val_score
+from sklearn.model_selection import KFold, cross_val_score
 import numpy as np
 
 
