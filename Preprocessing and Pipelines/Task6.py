@@ -9,6 +9,7 @@ from sklearn.pipeline import Pipeline
 
 def main():
     df = pd.read_csv('music_clean.csv', index_col=0)
+
     y = df['genre']
     X = df.drop(columns=['genre'])
 
