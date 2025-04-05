@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.datasets import load_digits
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 
@@ -48,5 +48,18 @@ def main():
     print('The SVC is obviously the better classifier because of the validation acc')
 
 
+def main2():
+    digits = load_digits()
+    train_x, test_x, train_y, test_y = train_test_split(
+        digits.data, digits.target, test_size=0.3)
+    support_vector_classifier = SVC()
+    support_vector_classifier.fit(train_x, train_y)
+    print('Training accuracy of non-linear support vector classifier:',
+          support_vector_classifier.score(train_x, train_y))
+    print('Validation accuracy of non-linear support vector classifier:',
+          support_vector_classifier.score(test_x, test_y))
+    print(cross_val_score(SVC(), digits.data, digits.target))
+
+
 if __name__ == '__main__':
-    main()
+    main2()
